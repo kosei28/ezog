@@ -23,6 +23,10 @@
         "image"
     ],
     "author": "kosei28",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kosei28/ezog.git"
+    },
     "license": "MIT",
     "engines": {
         "node": ">=16"
