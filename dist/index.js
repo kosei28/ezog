@@ -1,10 +1,8 @@
-'use strict';
-
-var sharp = require('sharp');
-var opentype_js = require('opentype.js');
-var twemojiParser = require('twemoji-parser');
-var twemoji = require('twemoji');
-var fetch = require('node-fetch');
+import sharp from 'sharp';
+import { parse } from 'opentype.js';
+import twemojiParser from 'twemoji-parser';
+import twemoji from 'twemoji';
+import fetch from 'node-fetch';
 
 async function loadGoogleFont(font, text) {
   const API = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
@@ -49,14 +47,14 @@ async function generateTextPath(text, width, fontSize, lineHeight, fonts, lineCl
   for (const font of fonts) {
     if (font.type == "normalFont") {
       if (font.data instanceof Buffer) {
-        opentypeFonts.push(opentype_js.parse(font.data.buffer));
+        opentypeFonts.push(parse(font.data.buffer));
       } else {
-        opentypeFonts.push(opentype_js.parse(font.data));
+        opentypeFonts.push(parse(font.data));
       }
     } else {
       const fontData = await loadGoogleFont(`${font.name}:wght@${font.weight}`, text + "\u2026");
       if (fontData) {
-        opentypeFonts.push(opentype_js.parse(fontData));
+        opentypeFonts.push(parse(fontData));
       }
     }
   }
@@ -310,6 +308,5 @@ async function generate(elements, options) {
   return await sharp(Buffer.from(svg)).png().toBuffer();
 }
 
-exports.defaultFonts = defaultFonts;
-exports.generate = generate;
+export { defaultFonts, generate };
 //# sourceMappingURL=index.js.map
