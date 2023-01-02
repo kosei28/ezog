@@ -1,0 +1,53 @@
+{
+    "name": "ezog",
+    "version": "0.1.0",
+    "description": "Easily generate OG images dynamically without using a browser",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "rollup -c",
+        "lint-fix": "eslint --fix src/ && prettier --write src/"
+    },
+    "type": "module",
+    "files": [
+        "dist/**/*"
+    ],
+    "keywords": [
+        "open graph image",
+        "open graph",
+        "og image",
+        "og:image",
+        "social",
+        "card",
+        "image"
+    ],
+    "author": "kosei28",
+    "license": "MIT",
+    "engines": {
+        "node": ">=16"
+    },
+    "devDependencies": {
+        "@types/node": "^18.11.18",
+        "@types/opentype.js": "^1.3.4",
+        "@types/sharp": "^0.31.1",
+        "@types/twemoji-parser": "^13.1.1",
+        "@typescript-eslint/eslint-plugin": "^5.47.1",
+        "@typescript-eslint/parser": "^5.47.1",
+        "esbuild": "^0.16.12",
+        "eslint": "^8.31.0",
+        "eslint-config-prettier": "^8.5.0",
+        "prettier": "^2.8.1",
+        "rollup": "^3.9.0",
+        "rollup-plugin-dts": "^5.1.0",
+        "rollup-plugin-esbuild": "^5.0.0"
+    },
+    "dependencies": {
+        "@resvg/resvg-js": "^2.2.0",
+        "node-fetch": "^3.3.0",
+        "opentype.js": "^1.3.4",
+        "sharp": "^0.31.3",
+        "twemoji": "^14.0.2",
+        "twemoji-parser": "^14.0.0"
+    }
+}
