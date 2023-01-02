@@ -1,6 +1,6 @@
 {
     "name": "ezog",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Easily generate OG images dynamically without using a browser",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
@@ -13,7 +13,6 @@
         "build": "rollup -c",
         "lint-fix": "eslint --fix src/ && prettier --write src/"
     },
-    "type": "module",
     "files": [
         "dist/**/*"
     ],
