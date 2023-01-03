@@ -28,6 +28,7 @@ type EzogNormalFont = {
 type EzogGoogleFont = {
     type: 'googleFont';
     name: string;
+    googleFontName: string;
     weight: number;
 };
 type EzogFont = EzogNormalFont | EzogGoogleFont;

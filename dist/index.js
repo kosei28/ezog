@@ -36,7 +36,8 @@ const googleFonts = [
 function defaultFonts(weight = 400) {
   return googleFonts.map((font) => ({
     type: "googleFont",
-    name: font,
+    name: `${font.split("+").join(" ")} ${weight}`,
+    googleFontName: font,
     weight
   }));
 }
@@ -52,7 +53,10 @@ async function generateTextPath(text, width, fontSize, lineHeight, fonts, lineCl
         opentypeFonts.push(parse(font.data));
       }
     } else {
-      const fontData = await loadGoogleFont(`${font.name}:wght@${font.weight}`, text + "\u2026");
+      const fontData = await loadGoogleFont(
+        `${font.googleFontName}:wght@${font.weight}`,
+        text + "\u2026"
+      );
       if (fontData) {
         opentypeFonts.push(parse(fontData));
       }
