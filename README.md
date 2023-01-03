@@ -14,10 +14,8 @@ EZOG is a JavaScript generator that can easily generate OG images without using 
 
 # Installation
 
-`npm install ezog`
-
-```js
-import { generate } from 'ezog';
+```sh
+npm install ezog
 ```
 
 # Example
