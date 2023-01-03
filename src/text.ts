@@ -27,7 +27,10 @@ export async function generateTextPath(
                 opentypeFonts.push(parse(font.data));
             }
         } else {
-            const fontData = await loadGoogleFont(`${font.name}:wght@${font.weight}`, text + '…');
+            const fontData = await loadGoogleFont(
+                `${font.googleFontName}:wght@${font.weight}`,
+                text + '…'
+            );
             if (fontData) {
                 opentypeFonts.push(parse(fontData));
             }

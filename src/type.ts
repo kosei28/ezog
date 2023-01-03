@@ -32,6 +32,7 @@ export type EzogNormalFont = {
 export type EzogGoogleFont = {
     type: 'googleFont';
     name: string;
+    googleFontName: string;
     weight: number;
 };
 

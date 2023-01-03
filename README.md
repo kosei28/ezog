@@ -41,7 +41,7 @@ const png = await generate(
             x: 0,
             y: 275,
             width: 1200,
-            fontFamily: ['Noto+Sans'],
+            fontFamily: ['Sans', 'Noto Sans 700'],
             fontSize: 60,
             lineHeight: 80,
             lineClamp: 1, // optional
@@ -60,7 +60,8 @@ const png = await generate(
             },
             {
                 type: 'googleFont',
-                name: 'Noto+Sans',
+                name: 'Noto Sans 700',
+                googleFontName: 'Noto+Sans',
                 weight: 700
             },
             ...defaultFonts(700 /* weight: optional */) // load multilingual Noto Sans from google fonts

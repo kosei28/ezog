@@ -41,7 +41,8 @@ const googleFonts = [
 export function defaultFonts(weight = 400): EzogGoogleFont[] {
     return googleFonts.map((font) => ({
         type: 'googleFont',
-        name: font,
+        name: `${font.split('+').join(' ')} ${weight}`,
+        googleFontName: font,
         weight: weight
     }));
 }
