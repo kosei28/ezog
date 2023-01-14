@@ -43,4 +43,5 @@ export type EzogOptions = {
     height: number;
     fonts: EzogFont[];
     background?: string;
+    fetch?: typeof globalThis.fetch;
 };

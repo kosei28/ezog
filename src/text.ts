@@ -1,7 +1,6 @@
 import { Font, Glyph, parse } from 'opentype.js';
 import twemojiParser from 'twemoji-parser';
 import twemoji from 'twemoji';
-import { fetch } from 'undici';
 import { loadGoogleFont } from './font';
 import { EzogFont } from './type';
 
@@ -13,7 +12,8 @@ export async function generateTextPath(
     fonts: EzogFont[],
     lineClamp?: number,
     align: 'left' | 'right' | 'center' = 'left',
-    color = '#000'
+    color = '#000',
+    fetch = globalThis.fetch
 ) {
     text = text.replace(/\s+/g, ' ');
 
@@ -29,7 +29,8 @@ export async function generateTextPath(
         } else {
             const fontData = await loadGoogleFont(
                 `${font.googleFontName}:wght@${font.weight}`,
-                text + '…'
+                text + '…',
+                fetch
             );
             if (fontData) {
                 opentypeFonts.push(parse(fontData));

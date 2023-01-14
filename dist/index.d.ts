@@ -37,9 +37,10 @@ type EzogOptions = {
     height: number;
     fonts: EzogFont[];
     background?: string;
+    fetch?: typeof globalThis.fetch;
 };
 
-declare function generate(elements: EzogElement[], options: EzogOptions): Promise<Buffer>;
+declare function generate(elements: EzogElement[], options: EzogOptions): Promise<Uint8Array>;
 
 declare function defaultFonts(weight?: number): EzogGoogleFont[];
 

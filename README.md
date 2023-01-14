@@ -22,6 +22,7 @@ npm install ezog
 
 ```js
 import { generate, defaultFonts } from 'ezog';
+import { fetch } from 'undici';
 
 const png = await generate(
     [
@@ -64,7 +65,8 @@ const png = await generate(
             },
             ...defaultFonts(700 /* weight: optional */) // load multilingual Noto Sans from google fonts
         ],
-        background: '#fff' // optional
+        background: '#fff', // optional
+        fetch: fetch // optional
     }
 );
 ```

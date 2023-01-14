@@ -1,7 +1,6 @@
-import { fetch } from 'undici';
 import { EzogGoogleFont } from './type';
 
-export async function loadGoogleFont(font: string, text: string) {
+export async function loadGoogleFont(font: string, text: string, fetch = globalThis.fetch) {
     const API = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
 
     const css = await (

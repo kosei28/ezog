@@ -1,4 +1,5 @@
-import { Resvg } from '@resvg/resvg-js';
+import { initWasm, Resvg } from '@resvg/resvg-wasm';
+import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
 import { generateTextPath } from './text';
 import { EzogElement, EzogFont, EzogOptions } from './type';
 
@@ -25,7 +26,8 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
                             fonts,
                             element.lineClamp,
                             element.align,
-                            element.color
+                            element.color,
+                            options.fetch
                         )}
                     </g>
                 `;
@@ -54,6 +56,7 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
         </svg>
     `;
 
+    await initWasm(Buffer.from(resvgWasm, 'base64'));
     const resvg = new Resvg(svg, {
         fitTo: {
             mode: 'original'
