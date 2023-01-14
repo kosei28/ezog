@@ -1,6 +1,5 @@
-import { initWasm, Resvg } from '@resvg/resvg-wasm';
-import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
-import { decode, encode } from 'base64-arraybuffer';
+import { Image } from 'imagescript';
+import { encode } from 'base64-arraybuffer';
 import { generateTextPath } from './text';
 import { EzogElement, EzogFont, EzogOptions } from './type';
 
@@ -57,12 +56,8 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
         </svg>
     `;
 
-    await initWasm(new WebAssembly.Module(decode(resvgWasm)));
-    const resvg = new Resvg(svg, {
-        fitTo: {
-            mode: 'original'
-        }
-    });
+    const image = await Image.renderSVG(svg);
+    const png = await image.encode();
 
-    return resvg.render().asPng();
+    return png;
 }
