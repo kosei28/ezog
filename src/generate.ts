@@ -1,5 +1,6 @@
 import { initWasm, Resvg } from '@resvg/resvg-wasm';
 import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
+import { decode, encode } from 'base64-arraybuffer';
 import { generateTextPath } from './text';
 import { EzogElement, EzogFont, EzogOptions } from './type';
 
@@ -33,10 +34,10 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
                 `;
             } else {
                 let url = 'data:image/png;base64,';
-                if (element.buffer instanceof Buffer) {
-                    url += element.buffer.toString('base64');
+                if (element.buffer instanceof ArrayBuffer) {
+                    url += encode(element.buffer);
                 } else {
-                    url += Buffer.from(element.buffer).toString('base64');
+                    url += element.buffer.toString('base64');
                 }
                 return `<image x="${element.x}" y="${element.y}" width="${element.width}" height="${element.height}" href="${url}" />`;
             }
@@ -56,7 +57,7 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
         </svg>
     `;
 
-    await initWasm(Buffer.from(resvgWasm, 'base64'));
+    await initWasm(decode(resvgWasm));
     const resvg = new Resvg(svg, {
         fitTo: {
             mode: 'original'

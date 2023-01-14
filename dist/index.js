@@ -1,4 +1,5 @@
 import { initWasm, Resvg } from '@resvg/resvg-wasm';
+import { encode, decode } from 'base64-arraybuffer';
 import { parse } from 'opentype.js';
 import twemojiParser from 'twemoji-parser';
 import twemoji from 'twemoji';
@@ -48,10 +49,10 @@ async function generateTextPath(text, width, fontSize, lineHeight, fonts, lineCl
   const opentypeFonts = [];
   for (const font of fonts) {
     if (font.type == "normalFont") {
-      if (font.data instanceof Buffer) {
-        opentypeFonts.push(parse(font.data.buffer));
-      } else {
+      if (font.data instanceof ArrayBuffer) {
         opentypeFonts.push(parse(font.data));
+      } else {
+        opentypeFonts.push(parse(font.data.buffer));
       }
     } else {
       const fontData = await loadGoogleFont(
@@ -258,7 +259,7 @@ async function generateTextPath(text, width, fontSize, lineHeight, fonts, lineCl
         const x = lineOffsetX + charOffsetX;
         const y = lineHeight * lineIndex + (lineHeight - fontSize) / 2;
         const buffer = await (await fetch(char.url)).arrayBuffer();
-        const base64 = Buffer.from(buffer).toString("base64");
+        const base64 = encode(buffer);
         svgs.push(
           `<image x="${x}" y="${y}" width="${fontSize}" height="${fontSize}" href="data:image/png;base64,${base64}" ></image>`
         );
@@ -297,10 +298,10 @@ async function generate(elements, options) {
                 `;
       } else {
         let url = "data:image/png;base64,";
-        if (element.buffer instanceof Buffer) {
-          url += element.buffer.toString("base64");
+        if (element.buffer instanceof ArrayBuffer) {
+          url += encode(element.buffer);
         } else {
-          url += Buffer.from(element.buffer).toString("base64");
+          url += element.buffer.toString("base64");
         }
         return `<image x="${element.x}" y="${element.y}" width="${element.width}" height="${element.height}" href="${url}" />`;
       }
@@ -312,7 +313,7 @@ async function generate(elements, options) {
             ${elementSvgs.join("")}
         </svg>
     `;
-  await initWasm(Buffer.from(resvgWasm, "base64"));
+  await initWasm(decode(resvgWasm));
   const resvg = new Resvg(svg, {
     fitTo: {
       mode: "original"

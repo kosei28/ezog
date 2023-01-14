@@ -31,7 +31,13 @@ export default [
                 sourcemap: true
             }
         ],
-        external: ['@resvg/resvg-wasm', 'opentype.js', 'twemoji', 'twemoji-parser'],
+        external: [
+            '@resvg/resvg-wasm',
+            'base64-arraybuffer',
+            'opentype.js',
+            'twemoji',
+            'twemoji-parser'
+        ],
         plugins: [base64({ include: '**/*.wasm' }), esbuild(), nodeResolve()]
     },
     {

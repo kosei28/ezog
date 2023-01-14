@@ -3,6 +3,7 @@ import twemojiParser from 'twemoji-parser';
 import twemoji from 'twemoji';
 import { loadGoogleFont } from './font';
 import { EzogFont } from './type';
+import { encode } from 'base64-arraybuffer';
 
 export async function generateTextPath(
     text: string,
@@ -21,10 +22,10 @@ export async function generateTextPath(
 
     for (const font of fonts) {
         if (font.type == 'normalFont') {
-            if (font.data instanceof Buffer) {
-                opentypeFonts.push(parse(font.data.buffer));
-            } else {
+            if (font.data instanceof ArrayBuffer) {
                 opentypeFonts.push(parse(font.data));
+            } else {
+                opentypeFonts.push(parse(font.data.buffer));
             }
         } else {
             const fontData = await loadGoogleFont(
@@ -311,7 +312,7 @@ export async function generateTextPath(
                 const x = lineOffsetX + charOffsetX;
                 const y = lineHeight * lineIndex + (lineHeight - fontSize) / 2;
                 const buffer = await (await fetch(char.url)).arrayBuffer();
-                const base64 = Buffer.from(buffer).toString('base64');
+                const base64 = encode(buffer);
                 svgs.push(
                     `<image x="${x}" y="${y}" width="${fontSize}" height="${fontSize}" href="data:image/png;base64,${base64}" ></image>`
                 );
