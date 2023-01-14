@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { EzogGoogleFont } from './type';
 
 export async function loadGoogleFont(font: string, text: string) {

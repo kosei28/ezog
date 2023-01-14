@@ -1,8 +1,8 @@
-import sharp from 'sharp';
+import { Resvg } from '@resvg/resvg-js';
 import { parse } from 'opentype.js';
 import twemojiParser from 'twemoji-parser';
 import twemoji from 'twemoji';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 
 async function loadGoogleFont(font, text) {
   const API = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
@@ -304,12 +304,17 @@ async function generate(elements, options) {
     })
   );
   const svg = `
-        <svg width="${options.width}" height="${options.height}">
+        <svg width="${options.width}" height="${options.height}" viewBox="0, 0, ${options.width}, ${options.height}" xmlns="http://www.w3.org/2000/svg">
             ${options.background !== void 0 ? `<rect x="0" y="0" width="${options.width}" height="${options.height}" fill="${options.background}" />` : ""}
             ${elementSvgs.join("")}
         </svg>
     `;
-  return await sharp(Buffer.from(svg)).png().toBuffer();
+  const resvg = new Resvg(svg, {
+    fitTo: {
+      mode: "original"
+    }
+  });
+  return resvg.render().asPng();
 }
 
 export { defaultFonts, generate };

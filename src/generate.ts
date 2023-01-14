@@ -1,4 +1,4 @@
-import sharp from 'sharp';
+import { Resvg } from '@resvg/resvg-js';
 import { generateTextPath } from './text';
 import { EzogElement, EzogFont, EzogOptions } from './type';
 
@@ -42,7 +42,9 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
     );
 
     const svg = `
-        <svg width="${options.width}" height="${options.height}">
+        <svg width="${options.width}" height="${options.height}" viewBox="0, 0, ${options.width}, ${
+        options.height
+    }" xmlns="http://www.w3.org/2000/svg">
             ${
                 options.background !== undefined
                     ? `<rect x="0" y="0" width="${options.width}" height="${options.height}" fill="${options.background}" />`
@@ -52,5 +54,11 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
         </svg>
     `;
 
-    return await sharp(Buffer.from(svg)).png().toBuffer();
+    const resvg = new Resvg(svg, {
+        fitTo: {
+            mode: 'original'
+        }
+    });
+
+    return resvg.render().asPng();
 }

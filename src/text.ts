@@ -1,7 +1,7 @@
 import { Font, Glyph, parse } from 'opentype.js';
 import twemojiParser from 'twemoji-parser';
 import twemoji from 'twemoji';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 import { loadGoogleFont } from './font';
 import { EzogFont } from './type';
 
