@@ -1,6 +1,6 @@
 {
     "name": "ezog",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "Easily generate OG images dynamically without using a browser",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

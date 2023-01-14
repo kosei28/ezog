@@ -313,7 +313,9 @@ async function generate(elements, options) {
             ${elementSvgs.join("")}
         </svg>
     `;
-  await initWasm(decode(resvgWasm));
+  await initWasm(
+    typeof Response == "undefined" ? decode(resvgWasm) : new Response(decode(resvgWasm))
+  );
   const resvg = new Resvg(svg, {
     fitTo: {
       mode: "original"

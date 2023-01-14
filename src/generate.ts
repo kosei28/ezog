@@ -57,7 +57,9 @@ export async function generate(elements: EzogElement[], options: EzogOptions) {
         </svg>
     `;
 
-    await initWasm(decode(resvgWasm));
+    await initWasm(
+        typeof Response == 'undefined' ? decode(resvgWasm) : new Response(decode(resvgWasm))
+    );
     const resvg = new Resvg(svg, {
         fitTo: {
             mode: 'original'
