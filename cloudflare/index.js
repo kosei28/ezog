@@ -1,4 +1,5 @@
-import { Resvg } from '@resvg/resvg-js';
+import { initWasm, Resvg } from '@resvg/resvg-wasm';
+import resvgWasm from './11cee257a8b25b1f.wasm';
 import { encode } from 'base64-arraybuffer';
 import { parse } from 'opentype.js';
 import twemojiParser from 'twemoji-parser';
@@ -18,28 +19,6 @@ async function loadGoogleFont(font, text, fetch = globalThis.fetch) {
       return await res.arrayBuffer();
     }
   }
-}
-const googleFonts = [
-  "Noto+Sans",
-  "Noto+Sans+JP",
-  "Noto+Sans+SC",
-  "Noto+Sans+KR",
-  "Noto+Sans+Thai",
-  "Noto+Sans+Hebrew",
-  "Noto+Sans+Arabic",
-  "Noto+Sans+Bengali",
-  "Noto+Sans+Tamil",
-  "Noto+Sans+Telugu",
-  "Noto+Sans+Malayalam",
-  "Noto+Sans+Devanagari"
-];
-function defaultFonts(weight = 400) {
-  return googleFonts.map((font) => ({
-    type: "googleFont",
-    name: `${font.split("+").join(" ")} ${weight}`,
-    googleFontName: font,
-    weight
-  }));
 }
 
 async function generateTextPath(text, width, fontSize, lineHeight, fonts, lineClamp, align = "left", color = "#000", fetch = globalThis.fetch) {
@@ -316,10 +295,11 @@ async function generateSvg(elements, options) {
 
 async function generate(elements, options) {
   const svg = await generateSvg(elements, options);
+  await initWasm(resvgWasm);
   const resvg = new Resvg(svg, { fitTo: { mode: "original" } });
   const png = resvg.render().asPng();
   return png;
 }
 
-export { defaultFonts, generate };
+export { generate };
 //# sourceMappingURL=index.js.map
